@@ -7,10 +7,10 @@
 #include <stdlib.h>
 #include <assert.h>
 
-char buf[0x400000];
+char buf[0x4000];
 
 #define NMUX 8
-#define CHUNKSIZE 0x4000
+#define CHUNKSIZE 0x40
 
 int main() {
 	srand(1212423);

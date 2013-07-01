@@ -10,15 +10,17 @@
 char buf[0x4000];
 
 int main() {
-	open("file_ro", O_WRONLY);
+	int fdw, fdr;
 
-	int fdw = open("file_ro", O_WRONLY);
-	read(fdw, buf, 100);
+	assert(open("file_ro", O_WRONLY) < 0);
 
-	int fdr = open("file_ro", O_RDONLY);
-	write(fdr, buf, 100);
+	assert((fdw = open("file_wo", O_WRONLY)) >= 0);
+	assert(read(fdw, buf, 100) < 0);
 
-	lseek(fdr, -12312, SEEK_CUR);
+	assert((fdr = open("file_ro", O_RDONLY)) >= 0);
+	assert(write(fdr, buf, 100) < 0);
+
+	assert(lseek(fdr, -12312, SEEK_CUR) < 0);
 
 	close(fdw);
 	close(fdr);

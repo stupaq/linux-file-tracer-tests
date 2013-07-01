@@ -10,6 +10,7 @@ MAIN        := $(subst .o,,$(MAINOBJS))
 SHARED			:= $(patsubst %.o,lib%.so,$(SHAREDOBJS))
 TESTFILES		:= file0 file1 file2 file3 file4 file5 file6 file7 file_ro file_wo
 TRACEDFILES	:= $(filter-out file7, $(TESTFILES))
+TESTUSER		:= zso2013
 
 all: $(DEPENDS) $(MAIN) $(SHARED)
 
@@ -35,11 +36,13 @@ test-setup: all
 	cd /sys/kernel/debug/tracing/; \
 		echo 0 > tracing_on; \
 		echo file_trace > current_tracer; \
+		echo 100000 > buffer_size_kb; \
 		echo 1 > tracing_on
+	chmod go+x ./errs
 
 test: test-setup
 	./rmux
-	./errs
+	su $(TESTUSER) -c './errs'
 
 clean:
 	-rm -f *.o $(DEPENDS) $(MAIN) $(SHARED) $(MAINOBJS) $(SHAREDOBJS)
