@@ -11,8 +11,8 @@ Running
 -------
 
 ```
-  cat /sys/kernel/debug/tracing/trace_pipe > /dev/null      # Ctrl-C after a while
-  make clean
-  make test                                                 # this expands tracing buffer
-  cat /sys/kernel/debug/tracing/trace_pipe > test.out
+cat /sys/kernel/debug/tracing/trace_pipe > /dev/null      # Ctrl-C after a while
+make clean
+make test                                                 # this expands tracing buffer
+cat /sys/kernel/debug/tracing/trace > test.out
 ```

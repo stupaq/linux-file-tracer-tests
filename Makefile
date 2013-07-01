@@ -27,18 +27,19 @@ $(SHARED) : lib%.so : %.o
 -include $(DEPENDS)
 
 test-setup: all
-	touch $(TESTFILES)
-	setfattr -n user.file_trace $(TRACEDFILES)
-	echo 1234567 > file_ro
-	echo 1234567 > file_wo
-	chmod ugo=r file_ro
-	chmod ugo=w file_wo
 	cd /sys/kernel/debug/tracing/; \
 		echo 0 > tracing_on; \
 		echo file_trace > current_tracer; \
-		echo 100000 > buffer_size_kb; \
-		echo 1 > tracing_on
+		echo 80000 > buffer_size_kb;
+	echo 1234567 > file_ro
+	echo 1234567 > file_wo
+	chmod ugo=r file_ro
+	chmod ugo=rw file_wo
 	chmod go+x ./errs
+	touch $(TESTFILES)
+	setfattr -n user.file_trace $(TRACEDFILES)
+	cd /sys/kernel/debug/tracing/; \
+		echo 1 > tracing_on
 
 test: test-setup
 	./rmux
