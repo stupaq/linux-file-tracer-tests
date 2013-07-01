@@ -14,9 +14,9 @@ char buf[0x400000];
 
 int main() {
 	srand(1212423);
-	char tmp[256];
 	int fd[NMUX];
 	for (int i = 0; i < NMUX; i++) {
+		char tmp[64];
 		sprintf(tmp, "file%d", i);
 		fd[i] = open(tmp, O_RDWR);
 		if (fd[i] < 0) {
@@ -67,6 +67,9 @@ int main() {
 		}
 		if (nfree == NMUX)
 			break;
+	}
+	for (int i = 0; i < NMUX; ++i) {
+		close(fd[i]);
 	}
 	return 0;
 }
