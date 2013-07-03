@@ -22,6 +22,9 @@ int main() {
 
 	assert(lseek(fdr, -12312, SEEK_CUR) < 0);
 
+	assert(read(fdr, NULL, 100) < 0);
+	assert(write(fdw, NULL, 100) < 0);
+
 	close(fdw);
 	close(fdr);
 }
