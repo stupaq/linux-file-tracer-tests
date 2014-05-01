@@ -16,3 +16,5 @@ make clean
 make test                                                 # this expands tracing buffer
 cat /sys/kernel/debug/tracing/trace > test.out
 ```
+
+Copyright (c) 2013 Mateusz Machalica
